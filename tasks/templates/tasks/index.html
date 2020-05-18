@@ -1,81 +1,32 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html>
 	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="{% static 'css/base.css' %}" rel="stylesheet">
 
-<style>
+	<div class="center-column">
+			<form method="POST">
+				{%csrf_token%}
+				{{form.task}}
+				<input class="btn btn-info" type="submit" value="Add Task" name="Create Task">
+			</form>
+		<div class="todo-list">
 
-	body{
-		background-color: #638CB8;
-	}
+		{% for a in list %}
+			<div class="item-row">
 
-	input{
-		width: 100%;
-		padding: 12px 20px;
-		margin: 8px 0;
-		box-sizing: border-box;
-	}
-
-	input::placeholder {
-	  color: #d3d3d3;
-	}
-
-	.submit{
-		background-color: #6BA3E8;
-	}
-
-	.center-column{
-		width:600px;
-		margin: 20px auto;
-		padding:20px;
-		background-color: #fff;
-		border-radius: 3px;
-		box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
-	}
-
-	.item-row{
-		background-color: #906abd;
-		margin: 10px;
-		padding: 20px;
-		border-radius: 3px;
-		color: #fff;
-		font-size: 16px;
-		box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
-	}
-
-	.btn-danger{
-		background-color: #ffae19;
-		border-color: #e59400;
-	}
-
-</style>
-
-
-	
-
-<div class="center-column">
-		<form method="POST">
-			{%csrf_token%}
-			{{form.task}}
-			<input class="btn btn-info" type="submit" value="Add Task" name="Create Task">
-		</form>
-	<div class="todo-list">
-
-	{% for a in list %}
-		<div class="item-row">
-
-			<a class="btn btn-sm btn-info" href="{% url 'editurl' a.id %}">Edit</a>
-			<a class="btn btn-sm btn-danger" href="{% url 'deleteurl' a.id %}">Delete</a>
-			
-			{% if a.complete == True %}
-			<strike>{{a}}</strike>
-			{% else %}
-			<span>{{a}}</span>
-			{% endif %}
+				<a class="btn btn-sm btn-info" href="{% url 'editurl' a.id %}">Edit</a>
+				<a class="btn btn-sm btn-danger" href="{% url 'deleteurl' a.id %}">Delete</a>
+				
+				{% if a.complete == True %}
+				<strike>{{a}}</strike>
+				{% else %}
+				<span>{{a}}</span>
+				{% endif %}
+			</div>
+		{%endfor%}
 		</div>
-	{%endfor%}
 	</div>
-</div>
 	
 </html>

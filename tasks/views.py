@@ -4,6 +4,7 @@ from .models import *
 from .forms import *
 # Create your views here.
 
+#home page
 def index(request):
 	list=Taskfield.objects.all()
 	form =ArticleForm()
@@ -14,10 +15,10 @@ def index(request):
 			form.save()
 		return redirect("/")
 
-
 	context={"list":list,"form":form}
 	return render(request,"tasks/index.html",context)
 
+#deleteing the tasks
 def delete(request,pk):
 	list=Taskfield.objects.get(id=pk)
 
@@ -27,6 +28,7 @@ def delete(request,pk):
 	context={"list":list}
 	return render(request,'tasks/delete.html',context)
 
+#editing the tasks
 def edit(request,pk):
 	list=Taskfield.objects.get(id=pk)
 	form =ArticleForm(instance=list)
@@ -36,7 +38,6 @@ def edit(request,pk):
 		if form.is_valid():
 			form.save()
 		return redirect("/")
-
 
 	context={"list":list,"form":form}
 	return render(request,"tasks/update.html",context)
